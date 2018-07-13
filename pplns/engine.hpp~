@@ -1,0 +1,4 @@
+#include "strats.hpp"
+
+int states(Player ** p, int num_players);
+int rounds(Player ** players, int num_rounds, int num_players);
