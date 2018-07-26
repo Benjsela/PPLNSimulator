@@ -58,7 +58,7 @@ int selfish1(Player * p){
 
 int hop1(Player * p){
   //mp1;
-  Pool * p1 = p->pool;;
+  Pool * p1;
   Pool * p2;
   float rounds;
   float lambda1 = p1->getArrivalRate();

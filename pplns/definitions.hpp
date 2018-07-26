@@ -3,6 +3,10 @@
 #include<queue>
 #include<vector>
 #include<map>
+#include<random>
+#include<algorithm>
+#include<list>
+
 
 class Share{
 public:
@@ -19,8 +23,8 @@ class Pool{
 public:
   int N;
   int num_players;
-  std::queue<Share *> * share_queue;
-  Player ** players;
+  std::list<Share *> * share_queue;
+  std::map<int,Player *> * players;
   std::vector<Player *> * players2;
   std::map<int,Player *> * players3;
   int submit(Share * s);  
@@ -28,7 +32,8 @@ public:
   int reset();
   int removePlayer(Player * p);
   int addPlayer(Player * p);
-  Pool(int n);
+  float getArrivalRate();
+  Pool(int n, std::map<int,Player *> * players);
 
 };
 
@@ -36,11 +41,14 @@ public:
 
 class Player{
 public:
+  float lambda;
+  std::poisson_distribution<int> * dist;
   int id;
   float hash;
   bool has_solution;
   int paid_shares;
   Share * solution;
+  std::default_random_engine gen;
   std::queue<Share *> * pool_Q;
   std::set<Share *> * share_set;
   Pool * pool;
@@ -51,9 +59,20 @@ public:
   int leavePool();
   int joinPool(Pool * p);
   int reset();
+  int mineBlocks();
   Player(float hash, int id);
 };
 
 
+class BlockMaker{
+public:
+  std::map<int,Player *> * players;
+  std::list<Share *> * shares;
+  std::poisson_distribution<int> * poisson;
+  Share * nextShare();
+  BlockMaker(int num_players,std::map<int,Player *> * players);
+private:
+  int prepareShares();
+};
 
 
